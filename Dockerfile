@@ -18,14 +18,14 @@ RUN cd /opt &&\
     ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/node /usr/local/bin/node4 &&\
     ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/node /usr/local/bin/node &&\
     ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/npm /usr/local/bin/npm &&\
-    /opt/node-v${NODE_VERSION_4}-linux-x64/bin/npm install -g npm &&\
+    /opt/node-v${NODE_VERSION_4}-linux-x64/bin/npm install -g npm@4 &&\
     rm /usr/local/bin/node /usr/local/bin/npm &&\
     curl -O https://nodejs.org/dist/v${NODE_VERSION_6}/node-v${NODE_VERSION_6}-linux-x64.tar.gz &&\
     tar xvzf node-v${NODE_VERSION_6}-linux-x64.tar.gz &&\
     ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node6 &&\
     ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node &&\
     ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm /usr/local/bin/npm &&\
-    /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm install -g npm
+    /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm install -g npm@4
 
 # Add a script to modify the UID / GID for the default user if needed
 COPY /usr/local/bin/change-uid /usr/local/bin/change-uid
