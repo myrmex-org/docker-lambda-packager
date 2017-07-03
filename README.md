@@ -9,7 +9,7 @@ A common solution to this problem is to install the package on an EC2 instance u
 deploy it in Amazon Lambda. Building serverless applications, it is ironic to be obliged to use a server to deploy code.
 
 This docker image is based on the [Amazon Linux](https://hub.docker.com/_/amazonlinux/) image and contains `gcc`,
-`node 4.3.2`, `node 6.10.2` and `npm 5` to create packages for Amazon Lambda.
+`node 4.3.2`, `node 6.10.2` and `npm 4` to create packages for Amazon Lambda.
 
 Using the docker image `myrmex/lambda-packager`, avoid errors like these during execution in Amazon Lambda:
 
