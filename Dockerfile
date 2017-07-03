@@ -7,7 +7,7 @@ ENV NODE_VERSION_4 4.3.2
 ENV NODE_VERSION_6 6.10.2
 
 # Install gcc add utilities to manage users and permissions
-RUN yum install -y gcc-c++ util-linux shadow-utils
+RUN yum install -y gcc-c++ util-linux shadow-utils zlib-devel openssl-devel
 
 # Install node v4 and node v6 as commands "node4" and "node6"
 # Command "node" defaults to v6
@@ -26,6 +26,19 @@ RUN cd /opt &&\
     ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node &&\
     ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm /usr/local/bin/npm &&\
     /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm install -g npm@4
+
+# Install python 3.6 and pip, python 2.7 is already available
+RUN curl -O https://bootstrap.pypa.io/get-pip.py &&\
+    python get-pip.py &&\
+    curl -O https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz &&\
+    tar zxvf Python-3.6.1.tgz &&\
+    cd Python-3.6.1 &&\
+    ./configure --prefix=/opt/python3 &&\
+    make &&\
+    make install &&\
+    ln -s /opt/python3/bin/python3 /usr/bin/python3 &&\
+    ln -s /opt/python3/bin/pip3 /usr/bin/pip3
+
 
 # Add a script to modify the UID / GID for the default user if needed
 COPY /usr/local/bin/change-uid /usr/local/bin/change-uid
