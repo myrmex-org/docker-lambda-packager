@@ -31,7 +31,7 @@ You can use a docker volume to mount the code of the Lambda it in a container. T
 docker run `pwd`:/data myrmex/lambda-packager
 ```
 
-The image does not create the zip archive for your. It only install the dependencies in an environment compatible with
+The image does not create the zip archive for your. It only installs the dependencies in an environment compatible with
 Lambda. You will still have to zip the result and deploy it in Amazon Lambda.
 
 For a node package, take care that `node_module` does not already exist before running the command.
