@@ -28,7 +28,7 @@ You can use a docker volume to mount the code of the Lambda it in a container. T
 6.10.
 
 ```bash
-docker run `pwd`:/data myrmex/lambda-packager
+docker run -v `pwd`:/data myrmex/lambda-packager
 ```
 
 The image does not create the zip archive for your. It only installs the dependencies in an environment compatible with
