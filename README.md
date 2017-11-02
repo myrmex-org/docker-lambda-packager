@@ -5,13 +5,13 @@
 Some node and python modules require a build system because they contain c++ binding. Once deployed, the compiled
 module may not be complatible with the Amazon Lambda execution environment.
 
-A common solution to this problem is to install the package on an EC2 instance using an Amazon Linux AMI and then to
-deploy it in Amazon Lambda. Building serverless applications, it is ironic to be obliged to use a server to deploy code.
+A common solution to this problem is to build the package on an EC2 instance using an Amazon Linux AMI and then to
+deploy it in Amazon Lambda. Building serverless applications, it is ironic to be obliged to use an EC2 server to deploy code.
 
 This docker image is based on the [Amazon Linux](https://hub.docker.com/_/amazonlinux/) image and contains `gcc`,
 `python 2.7`, `python 3.6`, `pip`, `node 4.3`, `node 6.10` and `npm 4` to create packages for Amazon Lambda.
 
-Using the docker image `myrmex/lambda-packager`, avoid errors like these during execution in Amazon Lambda:
+Using the docker image `myrmex/lambda-packager`, you can avoid errors like these during execution in Amazon Lambda:
 
 ```
 /var/lang/lib/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by /var/task/node_modules/bcrypt/lib/binding/bcrypt_lib.node)
@@ -23,7 +23,7 @@ Module version mismatch. Expected 46, got 48.
 
 ## Usage
 
-You can use a docker volume to mount the code of the Lambda it in a container. The directory where `npm install` or
+You can use a docker volume to mount the code of the Lambda in a container. The directory where `npm install` or
 `pip install` is executed inside the container is `/data`. By default, the installation will be performed for node
 6.10.
 
@@ -38,7 +38,7 @@ For a node package, take care that `node_module` does not already exist before r
 
 ### Managing permissions
 
-The user that performs `npm install` or `pip install` inside the container may have a `uid/gid` that differs from the
+The user account that performs `npm install` or `pip install` inside the container may have a `uid/gid` that differs from the
 `uid/gid` of the host machine and will not be able to perform the installation. The image `myrmex/lambda-packager`
 accepts two environment variables that allows to modify the `uid/gid` of the container's user: `HOST_UID` and
 `HOST_GID`. If `HOST_GID` is omitted, its value will be set to the value of `HOST_UID`.
