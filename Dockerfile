@@ -7,7 +7,7 @@ ENV NODE_VERSION_4 4.3.2
 ENV NODE_VERSION_6 6.10.2
 
 # Install gcc add utilities to manage users and permissions
-RUN yum install -y gcc-c++ util-linux shadow-utils zlib-devel openssl-devel
+RUN yum install -y gcc-c++ util-linux shadow-utils zlib-devel openssl-devel libffi-devel
 
 # Install node v4 and node v6 as commands "node4" and "node6"
 # Command "node" defaults to v6
