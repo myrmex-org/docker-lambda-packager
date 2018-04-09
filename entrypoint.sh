@@ -10,9 +10,16 @@ if [ `whoami` == "root" ]; then
         ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/npm /usr/local/bin/npm
     fi
 
+    if [ "$RUNTIME" == "node6" ]; then
+        echo "Setting node to v6"
+        rm /usr/local/bin/node /usr/local/bin/npm
+        ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node
+        ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm /usr/local/bin/npm
+    fi
+
     if [ "$HOST_UID" != "" ]; then
         # If the user is root and a HOST_UID environment variable exists,
-        # we changer the myrmex user UID and execute the command as the myrmex user
+        # we change the myrmex user UID and execute the command as the myrmex user
         if [ "$HOST_UID" != `id -u $DEFAULT_USER` ]; then
             echo "Changing $DEFAULT_USER UID to $HOST_UID"
             change-uid $HOST_UID $HOST_GID >/dev/null
