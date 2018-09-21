@@ -1,4 +1,4 @@
-FROM amazonlinux
+FROM amazonlinux:1
 
 MAINTAINER Alexis N-o "alexis@henaut.net"
 
