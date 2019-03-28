@@ -1,0 +1,15 @@
+dist: xenial
+
+language: minimal
+
+branches:
+  only:
+    - master
+
+services:
+  - docker
+
+install: true
+
+script:
+  - docker build -t lambda-packager:latest .
