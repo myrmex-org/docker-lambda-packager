@@ -3,13 +3,13 @@
 ## Why?
 
 Some node and python modules require a build system because they contain c++ binding. Once deployed, the compiled
-module may not be complatible with the Amazon Lambda execution environment.
+module may not be compatible with the Amazon Lambda execution environment.
 
 A common solution to this problem is to build the package on an EC2 instance using an Amazon Linux AMI and then to
 deploy it in Amazon Lambda. Building serverless applications, it is ironic to be obliged to use an EC2 server to deploy code.
 
-This docker image is based on the [Amazon Linux](https://hub.docker.com/_/amazonlinux/) image and contains `gcc`,
-`python 2.7`, `python 3.6`, `pip`, `node 4.3`, `node 6.10` and `npm 4` to create packages for Amazon Lambda.
+This docker image is based on the [Amazon Linux 1](https://hub.docker.com/_/amazonlinux/) image and contains `gcc`,
+`python 2.7`, `python 3.6`, `python 3.7`, `pip`, `node 6.10`, `node 8.10` to create packages for Amazon Lambda.
 
 Using the docker image `myrmex/lambda-packager`, you can avoid errors like these during execution in Amazon Lambda:
 
@@ -51,20 +51,29 @@ docker run -e HOST_UID=`id -u` -e HOST_GID=`id -g` -v `pwd`:/data myrmex/lambda-
 
 The `RUNTIME` environment variable allows to choose the runtime.
 
+
+#### Node 8.10
+
+Node 8.10 is the default runtime and does not require any special configuration.
+
 #### Node 6.10
 
-Node 6.10 is the default runtime and does not require any special configuration.
+```bash
+docker run -e RUNTIME=node6 -v `pwd`:/data myrmex/lambda-packager
+```
 
-#### Node 4.3
+#### Python 3.7
+
+Python 3.7 is the default Python 3 runtime and accepts the values `python3` or `python3.7`
 
 ```bash
-docker run -e RUNTIME=node4 -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=python3.7 -v `pwd`:/data myrmex/lambda-packager
 ```
 
 #### Python 3.6
 
 ```bash
-docker run -e RUNTIME=python3 -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=python3.6 -v `pwd`:/data myrmex/lambda-packager
 ```
 
 #### Python 2.7
