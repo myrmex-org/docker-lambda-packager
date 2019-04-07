@@ -2,19 +2,21 @@
 set -e
 
 if [ `whoami` == "root" ]; then
-
-    if [ "$RUNTIME" == "node4" ]; then
-        echo "Setting node to v4"
+    if [ "$RUNTIME" == "python" ] || [ "$RUNTIME" == "python2" ] || [ "$RUNTIME" == "python2.7" ]; then
+        echo "Using python v2.7 runtime"
+    elif [ "$RUNTIME" == "python3" ] || [ "$RUNTIME" == "python3.7" ]; then
+        echo "Using python v3.7 runtime"
+    elif [ "$RUNTIME" == "python3.6" ]; then
+        echo "Using python v3.6 runtime"
+        ln -sf /opt/python-${PYTHON_VERSION_3_6}/bin/python3 /usr/bin/python3
+        ln -sf /opt/python-${PYTHON_VERSION_3_6}/bin/pip3 /usr/bin/pip3
+    elif [ "$RUNTIME" == "node6" ]; then
+        echo "Using node v6 runtime"
         rm /usr/local/bin/node /usr/local/bin/npm
-        ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/node /usr/local/bin/node
-        ln -s /opt/node-v${NODE_VERSION_4}-linux-x64/bin/npm /usr/local/bin/npm
-    fi
-
-    if [ "$RUNTIME" == "node6" ]; then
-        echo "Setting node to v6"
-        rm /usr/local/bin/node /usr/local/bin/npm
-        ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node
-        ln -s /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm /usr/local/bin/npm
+        ln -sf /opt/node-v${NODE_VERSION_6}-linux-x64/bin/node /usr/local/bin/node
+        ln -sf /opt/node-v${NODE_VERSION_6}-linux-x64/bin/npm /usr/local/bin/npm
+    else
+        echo "Using node v8 runtime"
     fi
 
     if [ "$HOST_UID" != "" ]; then
