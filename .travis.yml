@@ -13,15 +13,33 @@ install: skip
 
 jobs:
   include:
-    - stage: build docker image
+    - stage: build docker images
       script:
-        - docker build -t lambda-packager:1 -f al1.Dockerfile .
+        - docker build -t myrmex/lambda-packager:1 -f al1.Dockerfile .
     -
       script:
-        - docker build -t lambda-packager:2 -f al2.Dockerfile .
-    - stage: test docker image
+        - docker build -t myrmex/lambda-packager:2 -f al2.Dockerfile .
+    - stage: verify docker images
       script:
-        - echo "Testing amazon linux 1 based image"
+        - docker image ls myrmex/lambda-packager
     -
       script:
-        - echo "Testing amazon linux 2 based image"
+        - docker image inspect myrmex/lambda-packager:1
+    -
+      script:
+        - docker image inspect myrmex/lambda-packager:2
+    - stage: test docker images
+        script:
+          - mkdir tests/node/node6
+          - cp tests/node/package.json tests/node/node6
+          - docker run -e RUNTIME=node6 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    - stage: test docker images
+        script:
+          - mkdir tests/node/node8
+          - cp tests/node/package.json tests/node/node8
+          - docker run -e RUNTIME=node8 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    - stage: test docker images
+        script:
+          - mkdir tests/node/node10
+          - cp tests/node/package.json tests/node/node10
+          - docker run -e RUNTIME=node10 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:2
