@@ -10,11 +10,9 @@ deploy it in Amazon Lambda. Building serverless applications, it is ironic to be
 
 This docker image is based on the [Amazon Linux](https://hub.docker.com/_/amazonlinux/) image and contains `gcc`.
 
-The AWS lambda [runtimes](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) are now split between `Amazon Linux` and `Amazon Linux 2` execution environments.
+The docker image `myrmex/lambda-packager:1` contains `python 2.7`, `python 3.6`, `python 3.7`, `pip`, `node 6.10`, `node 8.10` to create packages for Amazon Lambda.
 
-The docker image for `Amazon Linux` now contains `python 2.7`, `python 3.6`, `python 3.7`, `pip`, `node 6.10`, `node 8.10` to create packages for Amazon Lambda.
-
-The docker image for `Amazon Linux 2` now contains `node 10.15` to create packages for Amazon Lambda.
+The docker image for `myrmex/lambda-packager:2` contains `node 10.16` to create packages for Amazon Lambda.
 
 Using the docker images from `myrmex/lambda-packager`, you can avoid errors like these during execution in Amazon Lambda:
 
@@ -26,38 +24,26 @@ Using the docker images from `myrmex/lambda-packager`, you can avoid errors like
 Module version mismatch. Expected 46, got 48.
 ```
 
-## Building
-
-To build the required images standard `Dockerfile` have been included one for `Amazon Linux` and another for `Amazon Linux 2`.
-
-To build the `Amazon Linux` image that supports node 6.10, node 8.10, python 2.7, python 3.6 and python 3.7
-
-```bash
-cd Amazon\ Linux
-docker build -t myrmex/lambda-packager .
-```
-
-To build the `Amazon Linux 2` image that supports node 10.15
-
-```bash
-cd Amazon\ Linux\ 2
-docker build -t myrmex/lambda-packager:amazonlinux2 .
-```
-
 ## Usage
 
 You can use a docker volume to mount the code of the Lambda in a container. The directory where `npm install` or
-`pip install` is executed inside the container is `/data`. By default, the installation will be performed for node
-6.10.
+`pip install` is executed inside the container is `/data`. By default, the installation will be performed for node.
 
 ```bash
-docker run -v `pwd`:/data myrmex/lambda-packager
+docker run -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 The image does not create the zip archive for your. It only installs the dependencies in an environment compatible with
 Lambda. You will still have to zip the result and deploy it in Amazon Lambda.
 
 For a node package, take care that `node_module` does not already exist before running the command.
+
+## Building images locally
+
+```bash
+docker build -t myrmex/lambda-packager:1 -f al1.Dockerfile .
+docker build -t myrmex/lambda-packager:2 -f al2.Dockerfile .
+```
 
 ### Managing permissions
 
@@ -74,12 +60,12 @@ docker run -e HOST_UID=`id -u` -e HOST_GID=`id -g` -v `pwd`:/data myrmex/lambda-
 
 The `RUNTIME` environment variable allows to choose the runtime.
 
-### Node 10.15
+### Node 10.16
 
-Node 10.15 is the default runtime for `Amazon Linux 2` and does not require any special configuration.
+Node 10.16 is the default runtime for `Amazon Linux 2` and does not require any special configuration.
 
 ```bash
-docker run -v `pwd`:/data myrmex/lambda-packager:amazonlinux2
+docker run -v `pwd`:/data myrmex/lambda-packager:2
 ```
 
 #### Node 8.10
@@ -87,13 +73,13 @@ docker run -v `pwd`:/data myrmex/lambda-packager:amazonlinux2
 Node 8.10 is the default runtime for `Amazon Linux` and does not require any special configuration.
 
 ```bash
-docker run -v `pwd`:/data myrmex/lambda-packager
+docker run -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 #### Node 6.10
 
 ```bash
-docker run -e RUNTIME=node6 -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=node6 -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 #### Python 3.7
@@ -101,13 +87,13 @@ docker run -e RUNTIME=node6 -v `pwd`:/data myrmex/lambda-packager
 Python 3.7 is the default Python 3 runtime and accepts the values `python3` or `python3.7`
 
 ```bash
-docker run -e RUNTIME=python3.7 -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=python3.7 -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 #### Python 3.6
 
 ```bash
-docker run -e RUNTIME=python3.6 -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=python3.6 -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 #### Python 2.7
@@ -115,7 +101,7 @@ docker run -e RUNTIME=python3.6 -v `pwd`:/data myrmex/lambda-packager
 Accepts the values `python` or `python2`.
 
 ```bash
-docker run -e RUNTIME=python -v `pwd`:/data myrmex/lambda-packager
+docker run -e RUNTIME=python -v `pwd`:/data myrmex/lambda-packager:1
 ```
 
 ### Default command
