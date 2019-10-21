@@ -29,17 +29,17 @@ jobs:
       script:
         - docker image inspect myrmex/lambda-packager:2
     - stage: test docker images
-        script:
-          - mkdir tests/node/node6
-          - cp tests/node/package.json tests/node/node6
-          - docker run -e RUNTIME=node6 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
-    - stage: test docker images
-        script:
-          - mkdir tests/node/node8
-          - cp tests/node/package.json tests/node/node8
-          - docker run -e RUNTIME=node8 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
-    - stage: test docker images
-        script:
-          - mkdir tests/node/node10
-          - cp tests/node/package.json tests/node/node10
-          - docker run -e RUNTIME=node10 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:2
+      script:
+        - mkdir tests/node/node6
+        - cp tests/node/package.json tests/node/node6
+        - docker run -e RUNTIME=node6 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    -
+      script:
+        - mkdir tests/node/node8
+        - cp tests/node/package.json tests/node/node8
+        - docker run -e RUNTIME=node8 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    -
+      script:
+        - mkdir tests/node/node10
+        - cp tests/node/package.json tests/node/node10
+        - docker run -e RUNTIME=node10 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:2
