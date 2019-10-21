@@ -11,6 +11,9 @@ services:
 
 install: true
 
-script:
-  - docker build -t lambda-packager:1 -f al1.Dockerfile .
-  - docker build -t lambda-packager:2 -f al2.Dockerfile .
+jobs:
+  include:
+    - script:
+      - docker build -t lambda-packager:1 -f al1.Dockerfile .
+    - script:
+      - docker build -t lambda-packager:2 -f al2.Dockerfile .
