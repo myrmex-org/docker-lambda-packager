@@ -9,11 +9,13 @@ branches:
 services:
   - docker
 
-install: true
+install: skip
 
 jobs:
   include:
-    - script:
-      - docker build -t lambda-packager:1 -f al1.Dockerfile .
-    - script:
-      - docker build -t lambda-packager:2 -f al2.Dockerfile .
+    - language: minimal
+      script:
+        - docker build -t lambda-packager:1 -f al1.Dockerfile .
+    - language: minimal
+      script:
+        - docker build -t lambda-packager:2 -f al2.Dockerfile .
