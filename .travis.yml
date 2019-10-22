@@ -21,13 +21,17 @@ before_install:
 before_cache:
   - docker save -o docker_images/images.tar $(docker images -a -q)
 
+stages:
+  - build
+  - test
+
 env:
   - IMAGE_VERSION=1
   - IMAGE_VERSION=2
 
 jobs:
   include:
-    - stage: build docker images
+    - stage: build
       script:
         - docker build -t "myrmex/lambda-packager:${IMAGE_VERSION}" -f "al${IMAGE_VERSION}.Dockerfile" .
     # - stage: verify docker images
