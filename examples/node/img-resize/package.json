@@ -1,0 +1,15 @@
+{
+  "name": "sharp-in-lambda",
+  "version": "1.0.0",
+  "description": "Example of a lambda function package having a dependency with c++ binding",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "got": "^10.7.0",
+    "sharp": "^0.25.2"
+  }
+}
