@@ -19,7 +19,7 @@ RUN yum install -y wget gzip tar zip rsync shadow-utils gcc-c++ &&\
 
 # Set the build of a package as the default command
 # Initialise RSYNC_OPTIONS to exclude the node_modules folder
-ENV RSYNC_OPTIONS --exclude node_modules
+ENV RSYNC_OPTIONS --exclude node_modules --exclude .git
 COPY package-lambda.sh /usr/bin/package-lambda
 CMD ["package-lambda"]
 
