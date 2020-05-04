@@ -20,14 +20,14 @@ RUN yum install -y wget gzip tar zip rsync shadow-utils gcc-c++ &&\
 # Set the build of a package as the default command
 # Initialise RSYNC_OPTIONS to exclude the node_modules folder
 ENV RSYNC_OPTIONS --exclude node_modules
-COPY cmd.sh /cmd.sh
-CMD ["/cmd.sh"]
+COPY package-lambda.sh /usr/bin/package-lambda
+CMD ["package-lambda"]
 
 # Use the non root user
 USER $DEFAULT_USER
 
 RUN cd /workspace &&\
-    mkdir sources install package
+    mkdir sources package
 
 # Sources for the package should be mounted or copied in /sources
 WORKDIR /workspace/sources

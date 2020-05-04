@@ -22,14 +22,14 @@ RUN yum install -y wget util-linux tar zip rsync make gcc-c++ zlib-devel bzip2-d
 # Set the build of a package as the default command
 # Initialise RSYNC_OPTIONS to exclude the virtual environement folder
 ENV RSYNC_OPTIONS --exclude venv --exclude .venv
-COPY cmd.sh /cmd.sh
-CMD ["/cmd.sh"]
+COPY package-lambda.sh /usr/bin/package-lambda
+CMD ["package-lambda"]
 
 # Use the non root user
 USER $DEFAULT_USER
 
 RUN cd /workspace &&\
-    mkdir sources install package
+    mkdir sources package
 
 # Sources for the package should be mounted or copied in /sources
 WORKDIR /workspace/sources
