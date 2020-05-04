@@ -21,7 +21,7 @@ RUN yum install -y wget util-linux tar zip rsync make gcc-c++ zlib-devel bzip2-d
 
 # Set the build of a package as the default command
 # Initialise RSYNC_OPTIONS to exclude the virtual environement folder
-ENV RSYNC_OPTIONS --exclude venv --exclude .venv
+ENV RSYNC_OPTIONS --exclude venv --exclude .venv --exclude .git
 COPY package-lambda.sh /usr/bin/package-lambda
 CMD ["package-lambda"]
 
