@@ -58,7 +58,6 @@ docker run \
 
 The archive `/path/to/result/directory/package.zip` can then be used as a python Lambda package.
 
-
 ### Excluding files from the package
 
 Before installing dependencies, the container copy the source files in a clean directory with `rsync`.
@@ -82,3 +81,13 @@ docker run \
     -v /path/to/result/directory:/workspace/sources \
     myrmex/lambda-packager:node-12
 ```
+
+## Working from inside a container
+
+Depending on the context, one may want execute the packaging command from inside the container (eg: in a GitLab pipeline job).
+
+Usage: `package-lambda [path-to-sources-dir] [path-to-package-file]`
+
+The default value for `path-to-sources-dir` is `/workspace/sources`.
+
+The default value for `path-to-package-file` is `/workspace/package/package.zip`.
