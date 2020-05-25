@@ -39,7 +39,7 @@ The default command of `myrmex/lambda-packager:node-12` will install the depende
 ```bash
 docker run \
     -v `pwd`:/workspace/sources \
-    -v /path/to/result/directory:/workspace/sources \
+    -v /path/to/result/directory:/workspace/package \
     myrmex/lambda-packager:node-12
 ```
 
@@ -52,7 +52,7 @@ The default command of `myrmex/lambda-packager:python-3.8` will install the depe
 ```bash
 docker run \
     -v `pwd`:/workspace/sources \
-    -v /path/to/result/directory:/workspace/sources \
+    -v /path/to/result/directory:/workspace/package \
     myrmex/lambda-packager:python-3.8
 ```
 
@@ -78,7 +78,7 @@ If one also wants to exclude a `docs` directory and a `README.md` file for the g
 docker run \
     -e RSYNC_OPTIONS="--exclude node_modules --exclude docs --exclude README.md"
     -v `pwd`:/workspace/sources \
-    -v /path/to/result/directory:/workspace/sources \
+    -v /path/to/result/directory:/workspace/package \
     myrmex/lambda-packager:node-12
 ```
 
