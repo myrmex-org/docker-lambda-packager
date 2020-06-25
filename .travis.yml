@@ -1,0 +1,75 @@
+dist: xenial
+
+language: minimal
+
+cache:
+  directories:
+    - docker_images
+
+branches:
+  only:
+    - master
+
+services:
+  - docker
+
+install: skip
+
+before_install:
+  - docker load -i docker_images/images.tar || true
+
+before_cache:
+  - docker save -o docker_images/images.tar $(docker images -a -q)
+
+stages:
+  - build
+  - test
+
+env:
+  - IMAGE_VERSION=1
+  - IMAGE_VERSION=2
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker build -t "myrmex/lambda-packager:${IMAGE_VERSION}" -f "al${IMAGE_VERSION}.Dockerfile" .
+    # - stage: verify docker images
+    #   script:
+    #     - docker image ls myrmex/lambda-packager
+    # -
+    #   script:
+    #     - docker image inspect myrmex/lambda-packager:1
+    # -
+    #   script:
+    #     - docker image inspect myrmex/lambda-packager:2
+    # - stage: test docker images
+    #   script:
+    #     - mkdir tests/node/node6
+    #     - cp tests/node/package.json tests/node/node6
+    #     - docker run -e RUNTIME=node6 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    # -
+    #   script:
+    #     - mkdir tests/node/node8
+    #     - cp tests/node/package.json tests/node/node8
+    #     - docker run -e RUNTIME=node8 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:1
+    # -
+    #   script:
+    #     - mkdir tests/node/node10
+    #     - cp tests/node/package.json tests/node/node10
+    #     - docker run -e RUNTIME=node10 -v `pwd`/tests/node/node6:/data myrmex/lambda-packager:2
+    # -
+    #   script:
+    #     - mkdir tests/python/python2.7
+    #     - cp tests/python/package.json tests/python/python2.7
+    #     - docker run -e RUNTIME=python2.7 -v `pwd`/tests/python/python2.7:/data myrmex/lambda-packager:1
+    # -
+    #   script:
+    #     - mkdir tests/python/python3.6
+    #     - cp tests/python/package.json tests/python/python3.6
+    #     - docker run -e RUNTIME=python3.6 -v `pwd`/tests/python/python3.6:/data myrmex/lambda-packager:1
+    # -
+    #   script:
+    #     - mkdir tests/python/python3.7
+    #     - cp tests/python/package.json tests/python/python3.7
+    #     - docker run -e RUNTIME=python3.7 -v `pwd`/tests/python/python3.7:/data myrmex/lambda-packager:1
