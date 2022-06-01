@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "got": "^10.7.0",
-    "sharp": "^0.25.2"
+    "sharp": "^0.30.5"
   }
 }
